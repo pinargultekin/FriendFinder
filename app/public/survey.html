@@ -207,6 +207,64 @@
 
 </html>
 
+<script type="text/javascript">
+    $("#submit").on("click", function (event) {
+        event.preventDefault();
+
+        // Validate the form
+        var valid = true;
+        if ($("#name").val() === "" || $("#photo").val() === "") {
+            valid = false;
+            alert("Name & Photo are required!");
+        } else if ($("#a1").val() === "0" || $("#a2").val() === "0" || $("#a3").val() === "0" || $("#a4").val() === "0" || $("#a5").val() === "0" || $("#a6").val() === "0" || $("#a7").val() === "0" || $("#a8").val() === "0" || $("#a9").val() === "0" || $("#a10").val() === "0") {
+            valid = false;
+            alert("Please complete the survey.");
+        }
+        if (valid === true) {
+            var newUser = {
+                name: $("#name").val().trim(),
+                photo: $("#photo").val().trim(),
+                scores: [
+                    $('#a1').val(),
+                    $('#a2').val(),
+                    $('#a3').val(),
+                    $('#a4').val(),
+                    $('#a5').val(),
+                    $('#a6').val(),
+                    $('#a7').val(),
+                    $('#a8').val(),
+                    $('#a9').val(),
+                    $('#a10').val()
+                ]
+            };
+            console.log(newUser)
+            var currentURL = window.location.origin;
+
+            // POST request
+            $.post(currentURL + "/api/friends", newUser, function (data) {
+                $("#foundFriend").text(data.name);
+                $("#foundFriendPhoto").attr("src", data.photo);
+                $("#friendModal").modal("toggle");
+
+            });
+
+            //Clear form
+            $('#name').val("");
+            $('#photo').val("");
+            $('#a1').val("");
+            $('#a2').val("");
+            $('#a3').val("");
+            $('#a4').val("");
+            $('#a5').val("");
+            $('#a6').val("");
+            $('#a7').val("");
+            $('#a8').val("");
+            $('#a9').val("");
+            $('#a10').val("");
+
+        }
+    });
+</script>
 
 </body>
 
